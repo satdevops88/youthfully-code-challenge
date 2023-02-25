@@ -27,7 +27,6 @@ export const Search = () => {
   } = useForm();
 
   useEffect(() => {
-    console.log('useEffect is called');
     reset(INITIAL_PAYLOAD);
   }, [reset]);
 
@@ -48,7 +47,6 @@ export const Search = () => {
       });
       const res = await response.json();
 
-      console.log('res', res);
       if (res.success && !!res.data.length) {
         setGalleries((prev) => [...prev, ...res.data]);
         setHasMore(res.data.length !== 0);
@@ -67,11 +65,12 @@ export const Search = () => {
   };
 
   const onSubmit = async (data: FieldValues) => {
-    setPage(0);
     const payload = {
       ...data,
-      page,
+      page: 0,
     };
+
+    setPage(0);
     setGalleries([]);
     setFormResults(payload);
     getGalleries(payload);
@@ -81,7 +80,7 @@ export const Search = () => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="search-terms flex flex-col gap-10 py-12"
+        className="flex flex-col gap-10 py-12 search-terms"
       >
         <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-10">
           <Select
@@ -125,7 +124,7 @@ export const Search = () => {
         </div>
       </form>
 
-      {isLoading ? (
+      {page === 0 && isLoading ? (
         <div className="flex justify-center">
           <Loading />
         </div>

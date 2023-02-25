@@ -36,7 +36,7 @@ export const Results = ({ hasMore, data, handleNext }: ResultsProps) => {
             key={`${item.id}-${index}`}
             className="block"
             target={'_blank'}
-            href={`/detail/${item.id}?is_album=${item.is_album}`}
+            href={`/detail/${item.is_album ? 'album' : 'image'}/${item.id}`}
           >
             <CardImage item={item} />
           </Link>

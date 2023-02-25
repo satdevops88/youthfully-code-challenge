@@ -2,11 +2,25 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { GalleryAlbumData, GalleryImageData } from '@/utils/types';
 
-interface ICardImageProps {
+interface IGalleryItemProps {
   item: GalleryImageData & GalleryAlbumData;
 }
 
-export const CardImage = ({ item }: ICardImageProps) => {
+const Text = ({
+  label,
+  description,
+}: {
+  label: string;
+  description: string | number;
+}) => {
+  return (
+    <p className="text-base text-cyan-800 lg:text-lg">
+      {label}: <span className="ml-0.5 font-medium">{description}</span>
+    </p>
+  );
+};
+
+export const GalleryItem = ({ item }: IGalleryItemProps) => {
   const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [thumbnailWidth, setThumbnailWidth] = useState(0);
   const [thumbnailHeight, setThumbnailHeight] = useState(0);
@@ -14,6 +28,7 @@ export const CardImage = ({ item }: ICardImageProps) => {
   const {
     is_album,
     images,
+    description,
     cover,
     cover_width,
     cover_height,
@@ -22,6 +37,9 @@ export const CardImage = ({ item }: ICardImageProps) => {
     width,
     height,
     type,
+    ups,
+    downs,
+    score,
   } = item;
 
   useEffect(() => {
@@ -54,10 +72,10 @@ export const CardImage = ({ item }: ICardImageProps) => {
   ]);
 
   return (
-    <div className="w-full pb-6">
-      <div className="relative flex justify-center">
-        {thumbnailUrl && (
-          <>
+    <div className="relative flex flex-col items-center justify-center">
+      {thumbnailUrl && (
+        <>
+          <div className="p-4 lg:p-6">
             {isVideo ? (
               <video
                 autoPlay
@@ -77,12 +95,20 @@ export const CardImage = ({ item }: ICardImageProps) => {
                 blurDataURL={'/no-thumbnail.png'}
               />
             )}
-            <div className="absolute bottom-0 w-full text-xs bg-gray-400">
-              <p className="text-sm text-center">{title ?? 'No Title'}</p>
-            </div>
-          </>
-        )}
-      </div>
+          </div>
+
+          <div className="w-full p-4 text-xs border-t border-t-gray-400 bg-slate-200 lg:p-6">
+            <Text label="Title" description={title ?? 'No Title'} />
+            <Text
+              label="Description"
+              description={description ?? 'No Description'}
+            />
+            <Text label="UpVotes" description={ups ?? 0} />
+            <Text label="DownVotes" description={downs ?? 0} />
+            <Text label="Score" description={score ?? 0} />
+          </div>
+        </>
+      )}
     </div>
   );
 };
