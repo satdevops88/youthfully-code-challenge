@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  @apply bg-slate-200;
+}
+
+input,
+select,
+button {
+  @apply font-poppins;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='tel'] {
+  @apply rounded-md border border-solid border-gray-600 bg-transparent px-4 py-1.5 text-base leading-8 text-black transition ease-in-out focus:border-blue-200 focus:outline-none;
+}
+
+select {
+  @apply m-0 block appearance-none rounded-md border border-solid border-gray-600 bg-transparent bg-no-repeat py-1.5 pl-4 pr-10 text-base font-normal leading-8 text-black transition ease-in-out focus:border-blue-200 focus:outline-none;
+
+  background-image: url("data:image/svg+xml;utf8,<svg fill='dark' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-position-x: calc(100% - 8px);
+  background-position-y: 13px;
+}
+select option {
+  @apply text-black;
+}
