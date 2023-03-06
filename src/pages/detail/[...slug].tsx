@@ -2,7 +2,6 @@ import { GalleryItem } from '@/modules/GalleryItem';
 import { GalleryAlbumData, GalleryImageData } from '@/utils/types';
 
 type DetailProps = {
-  slug: string;
   data: GalleryAlbumData & GalleryImageData;
 };
 
@@ -67,6 +66,7 @@ export const getStaticProps = async function ({
     props: {
       data,
     },
+    revalidate: 10,
   };
 };
 
